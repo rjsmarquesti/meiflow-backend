@@ -3,16 +3,32 @@ import cors from "cors";
 
 const app = express();
 
-// libera acesso externo (CORS)
-app.use(cors());
+/**
+ * Middlewares
+ */
+app.use(cors({
+  origin: "*", // depois podemos restringir
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-// permite JSON
 app.use(express.json());
 
+/**
+ * Rotas
+ */
 app.get("/", (req, res) => {
-  res.send("MEI-Flow API está funcionando");
+  res.json({
+    status: "ok",
+    message: "MEI-Flow API está funcionando 🚀"
+  });
 });
 
-app.listen(3000, () => {
-  console.log("API rodando na porta 3000");
+/**
+ * Porta dinâmica (IMPORTANTE para EasyPanel)
+ */
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`API rodando na porta ${PORT}`);
 });
