@@ -3,29 +3,12 @@ import express from "express";
 const app = express();
 app.use(express.json());
 
-// rota de teste
-app.get("/", (req, res) => {
-  res.send("MEI-Flow API está funcionando");
-});
-
-// PORTA DINÂMICA (obrigatório no EasyPanel)
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`API rodando na porta ${PORT}`);
-});
-
-import express from "express";
-
-const app = express();
-app.use(express.json());
-
 // rota principal
 app.get("/", (req, res) => {
   res.send("MEI-Flow API está funcionando");
 });
 
-// rota de healthcheck
+// rota de healthcheck (ESSA É A CHAVE)
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "ok",
@@ -34,10 +17,9 @@ app.get("/health", (req, res) => {
   });
 });
 
-// porta dinâmica
+// porta dinâmica (OBRIGATÓRIA no EasyPanel)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`API rodando na porta ${PORT}`);
 });
-
