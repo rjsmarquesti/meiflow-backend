@@ -7,7 +7,18 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  ssl: false, // IMPORTANTE no EasyPanel
+  ssl: false,
 });
+
+export async function checkDb() {
+  try {
+    const client = await pool.connect();
+    await client.query("SELECT 1");
+    client.release();
+    return { connected: true };
+  } catch (err) {
+    return { connected: false, error: err.message };
+  }
+}
 
 export default pool;
